@@ -1,0 +1,303 @@
+
+%tde_prefix %prefix 
+%tde_bindir %_bindir 
+%tde_confdir %_sysconfdir/tde3
+%tde_datadir %_datadir/tde3
+%tde_mandir %_mandir
+%tde_docdir %_docdir/tde3
+%tde_libdir %_libdir/tde3
+%tde_tdelibdir %tde_libdir
+%tde_tdedocdir %_docdir/tde3
+%tde_libexec %_libexecdir/tde3
+%tde_includedir %_includedir/tde3
+%tde_tdeincludedir %tde_includedir
+
+
+%tde_html_docdir %tde_docdir/HTML
+
+
+# ===== new =======
+# TDE3 cmake
+
+%simply_cmake cmake
+
+%_T3datadir %_datadir/trinity
+%_T3prefix %_T3datadir
+%_T3bindir %_libexecdir/tde/bin
+%_T3sbindir %_libexecdir/tde/sbin
+%_T3lib %_libdir/tde
+%_T3plug %_T3lib/plugins
+%_T3exec %_T3lib/libexec
+%_T3libdir %_libdir
+%_T3conf %_T3datadir/config
+%_T3cfg %_T3datadir/config.kcfg
+%_T3start %_T3datadir/autostart
+%_T3apps %_T3datadir/apps
+%_T3conf_update %_T3apps/kconf_update
+%_T3xdg_apps %_T3datadir/applications/kde
+%_T3xdg_dirs %_T3datadir/desktop-directories
+%_T3xdg_mime %_T3datadir/mime/packages
+%_T3services %_T3datadir/services
+%_T3applnk %_T3datadir/applnk
+%_T3mimelnk %_T3datadir/mimelnk
+%_T3srv %_T3datadir/services
+%_T3srvtyp %_T3datadir/servicetypes
+%_T3snd %_T3datadir/sounds
+%_T3wall %_datadir/wallpapers
+%_T3iconsdir %_iconsdir
+%_tde_iconsdir %_T3datadir/icons
+%_T3doc %_T3datadir/doc/HTML
+%_T3tmpl %_T3datadir/templates
+%_T3i18n %_T3datadir/locale
+%_T3emo %_T3datadir/emoticons
+#
+%_T3dbus_interfaces %_datadir/dbus-1/interfaces
+%_T3dbus_services %_datadir/dbus-1/services
+%_T3dbus_sys_services %_datadir/dbus-1/system-services
+%_T3dbus_system %_sysconfdir/dbus-1/system.d
+#
+%_T3includedir %_includedir/kde
+%_T3link %_T3lib/devel
+
+%_T3xdg_menu %_sysconfdir/xdg/menus
+%_T3xdg_apps %_desktopdir/tde
+%_T3xdg_dirs %_datadir/desktop-directories
+%_T3xdg_mime %_datadir/mime/packages
+%_T3applnk %_datadir/applnk
+%_tde_xdg_menu %_sysconfdir/tde/xdg/menus
+%__tde_xdg_menu %(/bin/sh -c "echo 'Warning!!! Deprecated macros __tde_xdg_menu' >&2")%_tde_xdg_menu
+%_tde_xdg_apps %_T3datadir/applications/tde
+%__tde_xdg_apps %(/bin/sh -c "echo 'Warning!!! Deprecated macros __tde_xdg_apps' >&2")%_tde_xdg_apps
+%_tde_xdg_dirs %_T3datadir/desktop-directories
+%__tde_xdg_dirs %(/bin/sh -c "echo 'Warning!!! Deprecated macros __tde_xdg_dirs' >&2")%_tde_xdg_dirs
+
+
+# TDE3 autotools
+%_tdedir %prefix
+%_bT_menudir %buildroot/%_menudir
+%_libkde %_libdir/tde
+%_tdeconfdir %_sysconfdir/trinity
+%_Tconfig %_tdeconfdir/share/config
+%_bTconfig %buildroot/%tdeconfdir/share/config
+%_Tcfg %_datadir/config.kcfg
+%_bTcfg %buildroot/%_datadir/config.kcfg
+%_Tlibdir %_libtde
+%_bTlibdir %buildroot/%_libtde
+%_Tautostart %_datadir/autostart
+%_bTautostart %buildroot/%_datadir/autostart
+%_Tmenudir %_datadir/applications/tde
+%_bTmenudir %buildroot/%_datadir/applications/tde
+%_Tservices %_datadir/services
+%_bTservices %buildroot/%_datadir/services
+%_Tapps %_datadir/apps
+%_bTapps %buildroot/%_datadir/apps
+%_Tapplnk %_datadir/applnk
+%_bTapplnk %buildroot/%_datadir/applnk
+%_Tmimelnk %_datadir/mimelnk
+%_bTmimelnk %buildroot/%_datadir/mimelnk
+%_Tservices %_datadir/services
+%_bTservices %buildroot/%_datadir/services
+%_Tservicetypes %_datadir/servicetypes
+%_bTservicetypes %buildroot/%_datadir/servicetypes
+%_Tsounds %_datadir/sounds
+%_bTsounds %buildroot/%_datadir/sounds
+%_Twallpapers %_datadir/wallpapers
+%_bTwallpapers %buildroot/%_datadir/wallpapers
+
+
+#build
+%__tde_buildtype %{!?_T3buildtype:Release}%{?_T3buildtype:%?_T3buildtype}
+
+%cmake_T3 \
+    __cmake_t3() \
+    { \
+cmake \
+  -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
+  -DCMAKE_C_FLAGS="${RPM_OPT_FLAGS} -DNDEBUG" \
+  -DCMAKE_CXX_FLAGS="${RPM_OPT_FLAGS} -DNDEBUG" \
+  -DCMAKE_SKIP_RPATH=ON \
+  -DCMAKE_VERBOSE_MAKEFILE=ON \
+  -DWITH_GCC_VISIBILITY=OFF \
+  -DQTDIR="%_datadir/tqt3" \
+  -DQT_INCLUDE_DIR="%_includedir/tqt3" \
+  -DQT_LIBRARY_DIR="%_libdir/tqt3" \
+  -DCMAKE_INSTALL_PREFIX="%prefix" \
+  -DPKGCONFIG_INSTALL_DIR="%_pkgconfigdir" \
+  -DINCLUDE_INSTALL_DIR=%_includedir/tqt3 \
+  -DLIB_INSTALL_DIR=%_libdir \
+  -DBIN_INSTALL_DIR=%_bindir \
+  -DCMAKE_LIBRARY_PATH="%_libdir" \
+  -DCMAKE_INCLUDE_PATH="%_includedir" \
+  -DWITH_QT3="ON" \
+  -DBUILD_ALL="ON" \
+  -DUSE_QT3="ON" \
+  "$@" \
+  }
+
+
+%T3cmake \
+    __tde3_cmake() \
+    { \
+	export PATH=%tde_bindir:$PATH \
+	pushd BUILD-%_target_platform \
+	\\\
+	cmake  .. \\\
+	    %{?_cmake_skip_rpath} \\\
+	    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=yes \\\
+	    -DCMAKE_C_FLAGS:STRING='%optflags' \\\
+	    -DCMAKE_CXX_FLAGS:STRING='%optflags' \\\
+	    -DCMAKE_Fortran_FLAGS:STRING='%optflags' \\\
+	    -DCMAKE_INSTALL_PREFIX=%prefix \\\
+	    -DINCLUDE_INSTALL_DIR:PATH=%_includedir \\\
+	    -DLIB_INSTALL_DIR:PATH=%_libdir \\\
+	    -DSYSCONF_INSTALL_DIR:PATH=%_sysconfdir \\\
+	    -DSHARE_INSTALL_PREFIX:PATH=%_datadir \\\
+	    -DLIB_DESTINATION=%_lib \\\
+	    %if "%_lib" == "lib64" \
+	    -DLIB_SUFFIX="64" \\\
+	    %else \
+	    -DLIB_SUFFIX="" \\\
+	    %endif \
+	    \\\
+	    -DCMAKE_INSTALL_PREFIX=%_T3prefix \\\
+	    -DBIN_INSTALL_DIR=%_T3bindir \\\
+	    -DSBIN_INSTALL_DIR=%_T3sbindir \\\
+	    -DICON_INSTALL_DIR=%_T3iconsdir \\\
+	    -DXDG_APPS_INSTALL_DIR=%_T3xdg_apps \\\
+	    -DXDG_DIRECTORY_INSTALL_DIR=%_T3xdg_dirs \\\
+	    -DLIB_INSTALL_DIR=%_T3libdir \\\
+	    -DLIBEXEC_INSTALL_DIR=%_T3exec \\\
+	    -DINCLUDE_INSTALL_DIR=%_T3includedir \\\
+	    -DTDE_INCLUDE_INSTALL_DIR=%_T3includedir \\\
+	    -DSYSCONF_INSTALL_DIR=%_sysconfdir  \\\
+	    -DDATA_INSTALL_DIR=%_T3apps \\\
+	    -DCONFIG_INSTALL_DIR=%_T3conf \\\
+	    -DKCFG_INSTALL_DIR=%_T3cfg \\\
+	    -DHTML_INSTALL_DIR=%_T3doc \\\
+	    -DAPPLNK_INSTALL_DIR=%_T3applnk \\\
+	    -DLOCALE_INSTALL_DIR=%_T3i18n \\\
+	    -DSERVICES_INSTALL_DIR=%_T3srv \\\
+	    -DSERVICETYPES_INSTALL_DIR=%_T3srvtyp \\\
+	    -DKCONF_UPDATE_INSTALL_DIR=%_T3conf_update \\\
+	    -DXDG_MIME_INSTALL_DIR=%_T3xdg_mime \\\
+	    -DAUTOSTART_INSTALL_DIR=%_T3start \\\
+	    -DSOUND_INSTALL_DIR=%_T3snd \\\
+	    -DTEMPLATES_INSTALL_DIR=%_T3tmpl \\\
+	    -DWALLPAPER_INSTALL_DIR=%_T3wall \\\
+	    -DDBUS_INTERFACES_INSTALL_DIR=%_T3dbus_interfaces \\\
+	    -DDBUS_SERVICES_INSTALL_DIR=%_T3dbus_services \\\
+	    -DDBUS_SYSTEM_SERVICES_INSTALL_DIR=%_T3dbus_sys_services \\\
+	    -DMAN_INSTALL_DIR=%_mandir \\\
+	    -DINFO_INSTALL_DIR=%_infodir \\\
+	    -DINSTALL_PYTHON_FILES_IN_PYTHON_PREFIX:BOOL=yes \\\
+	    "$@" \
+	popd \
+    } \
+    mkdir -p BUILD-%_target_platform; \
+    __tde3_cmake
+
+
+%Tcmake \
+    %T3cmake \\\
+	-DINCLUDE_INSTALL_DIR=%_includedir \\\
+	-DSOUND_INSTALL_DIR=%_datadir/sounds \\\
+	-DAUTOSTART_INSTALL_DIR=%_sysconfdir/xdg/autostart \\\
+	-DXDG_DIRECTORY_INSTALL_DIR=%_datadir/desktop-directories \\\
+	-DXDG_APPS_INSTALL_DIR=%_desktopdir
+
+%T3configure %T3cmake
+
+%Tconfigure %Tcmake
+
+%T3make \
+    __tde_make() \
+    { \
+	pushd BUILD-%_target_platform; \
+	%make_build "$@" \
+	popd \
+    } \
+    __tde_make
+
+%Tmake %T3make
+
+%T3build \
+    __tde_build() \
+    { \
+	%T3cmake "$@" \
+	%T3make \
+    } \
+    __tde_build
+
+%Tbuild \
+    __tde_build() \
+    { \
+	%Tcmake "$@" \
+	%Tmake \
+    } \
+    __tde_build
+
+%__tde_install_move_files_to_alternate_placement \
+    if [ -d %buildroot/%tde_iconsdir/oxygen ]; then \
+	mkdir -p %buildroot/%_T3iconsdir/ \
+	rm -rf %buildroot/%_T3iconsdir/oxygen \
+	mv %buildroot/%tde_iconsdir/oxygen %buildroot/%_T3iconsdir/ \
+    fi
+
+%__tde_install_move_tde_specific_files \
+    mkdir -p %buildroot/%_T3link \
+    pushd %buildroot/%_T3libdir \
+    for l in lib*.so \
+    do \
+	[ -L "$l" ] || continue \
+	f=`readlink "$l"` \
+	ln -sf `relative "%buildroot/%_T3libdir/$f" "%buildroot/%_T3link/$f"` "%buildroot/%_T3link/$l" \
+	rm -f "$l" \
+	done \
+    popd \
+    \
+    if [ -d %buildroot/%_T3libdir/kconf_update_bin ]; then \
+	mkdir -p %buildroot/%_T3libdir/kconf4_update_bin/ \
+	find %buildroot/%_T3libdir/kconf_update_bin/ -type f | \\\
+	while read f \
+	do \
+	    mv $f %buildroot/%_T3libdir/t3conf4_update_bin/ \
+	done \
+    fi \
+    if [ -d %buildroot/%tde_prefix/share ]; then \
+	mkdir -p %buildroot/%_T3prefix/share \
+	mv %buildroot/%tde_prefix/share/* %buildroot/%_T3prefix/share/ ||: \
+	rm -rf %buildroot/%tde_prefix/share \
+    fi \
+    if [ -d %buildroot/%tde_prefix/bin ]; then \
+	mkdir -p %buildroot/%tde_bindir \
+	mv %buildroot/%tde_prefix/bin/* %buildroot/%tde_bindir/ ||: \
+	rm -rf %buildroot/%tde_prefix/bin \
+    fi \
+    if [ -d %buildroot/%_T3xdg_menu ]; then \
+	mkdir -p %buildroot/%_tde_xdg_menu \
+	rm -rf %buildroot/%_tde_xdg_menu \
+	mv %buildroot/%_T3xdg_menu %buildroot/%_tde_xdg_menu \
+    fi \
+    if [ -d %buildroot/%_T3apps/cmake/modules/ ]; then \
+	find %buildroot/%_T3apps/cmake/modules/ -type f | while read f ; do \
+	    sed -ni -e 'H;${x;s|[[:space:]][[:space:]]*PATHS[[:space:]]*\\n| PATHS |g;p}' $f \
+	    sed -ni -e 'H;${x;s|\\n[[:space:]]*HINTS[[:space:]][[:space:]]*| HINTS |g;p}' $f \
+	    sed -i -e 's|PATHS[[:space:]][[:space:]]*${TDE_LIB_INSTALL_DIR}|PATHS %_libdir/tdelink ${TDE_LIB_INSTALL_DIR}|' $f \
+	    sed -i -e 's|PATHS[[:space:]][[:space:]]*${LIB_INSTALL_DIR}|PATHS %_libdir/tdelink ${LIB_INSTALL_DIR}|' $f \
+	    sed -i -e 's|PATHS[[:space:]][[:space:]]*${TDE_LIB_DIR}|PATHS %_libdir/tdelink ${TDE_LIB_DIR}|' $f \
+	    sed -i -e 's|\\([Ff][Ii][Nn][Dd]_[Ll][Ii][Bb][Rr][Aa][Rr][Yy].*[[:space:]]HINTS[[:space:]]\\)\\(.*\\)|\\1%_libdir/tdelink \\2|g' $f \
+	done \
+    fi
+
+%T3install \
+    __tde_install() \
+    { \
+	%make -C BUILD-%_target_platform DESTDIR=%buildroot install "$@" \
+    } \
+    __tde_install
+
+%Tinstall \
+    %Tinstall \
+    %__tde_install_move_tde_specific_files \
+
+%T3find_lang %find_lang
