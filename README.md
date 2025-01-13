@@ -1,2 +1,2 @@
-# 1-cmake-trinity
-Компонент TDE - cmake-trinity
+# 1-rpm-macros-trinity
+RPM-macros для TDE
