@@ -124,7 +124,7 @@ cmake \
   -DCMAKE_INSTALL_PREFIX="%prefix" \
   -DPKGCONFIG_INSTALL_DIR="%_pkgconfigdir" \
   -DINCLUDE_INSTALL_DIR=%_includedir/tqt3 \
-  -DLIB_INSTALL_DIR=%_libdir \
+  -DLIB_INSTALL_DIR="%_libdir" \
   -DBIN_INSTALL_DIR=%_bindir \
   -DCMAKE_LIBRARY_PATH="%_libdir" \
   -DCMAKE_INCLUDE_PATH="%_includedir" \

@@ -15,7 +15,7 @@
 #
 
 # TDE variables
-Name: rpm-macros-trinity
+Name: tde-rpm-macros
 Version: 14.0.4
 Release: alt1
 Summary: RPM helper macros to rebuild TDE packages
